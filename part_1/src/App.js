@@ -2,21 +2,19 @@ const Header = ({ course }) => {
   return <h1>{course}</h1>
 }
 
+const Part = ({ name, number }) => {
+  return <p>{name} {number}</p>
+}
+
 const Content = ({ data }) => {
   const {part1, exercises1, part2, exercises2, part3, exercises3} = data;
 
   return (
-    <>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-    </>
+    <div>
+      <Part name={part1} number={exercises1}/>
+      <Part name={part2} number={exercises2}/>
+      <Part name={part3} number={exercises3}/>
+    </div>
   )
 }
 
