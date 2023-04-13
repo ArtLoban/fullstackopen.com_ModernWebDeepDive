@@ -1,3 +1,5 @@
+## Depicting of Create New Note
+
 ```mermaid
 sequenceDiagram
     participant browser
