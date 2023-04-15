@@ -8,15 +8,20 @@ const Statistics = ({data}) => {
   return (
     <div>
       <h2>Statistics</h2>
-      <div>
-        <p>Good: {good}</p>
-        <p>Neutral: {neutral}</p>
-        <p>Bad: {bad}</p>
-        <hr/>
-        <p>All: {total}</p>
-        <p>Average: {isNaN(average) ? 0 : average}</p>
-        <p>Positive: {isNaN(positive) ? 0 : positive}%</p>
-      </div>
+      {
+        (total > 0) ?
+        <div>
+          <p>Good: {good}</p>
+          <p>Neutral: {neutral}</p>
+          <p>Bad: {bad}</p>
+          <hr/>
+          <p>All: {total}</p>
+          <p>Average: {isNaN(average) ? 0 : average}</p>
+          <p>Positive: {isNaN(positive) ? 0 : positive}%</p>
+        </div>
+        :
+        <div>No feedback given</div>
+      }
     </div>
   )
 }
