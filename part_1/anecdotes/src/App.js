@@ -13,7 +13,7 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-  const [points, setPoints] = useState([])
+  const [points, setPoints] = useState(anecdotes.map(() => 0))
 
   const handleNext = () => {
     if (anecdotes.length < 2) return;
@@ -32,25 +32,42 @@ const App = () => {
   }
 
   const handleVote = () => {
-    let votes = points[selected] || 0;
-
-    votes++
-
     const newPoints = [...points];
-    newPoints[selected] = votes;
+    newPoints[selected] += 1;
 
     setPoints(newPoints)
   }
 
+  const getTopVoted = () => {
+    const maxValue = Math.max(...points);
+
+    if (maxValue === 0 ) return
+
+    const index = points.reduce((accumulator, votes, index) => {
+      return votes > points[accumulator] ? index : accumulator;
+    }, 0);
+
+    return (
+      <div>
+        <h2>Anecdote with most votes</h2>
+        <p>{anecdotes[index]}</p>
+        <p>Has {points[index]} votes</p>
+      </div>
+    )
+  }
+
   return (
     <div>
-
-      <p>{anecdotes[selected]}</p>
-      <p>Has { points[selected] || 0 } votes</p>
       <div>
-        <button onClick={handleVote}>Vote</button>
-        <button onClick={handleNext}>Next Anecdote</button>
+        <h2>Anecdote of the day</h2>
+        <p>{anecdotes[selected]}</p>
+        <p>Has { points[selected] || 0 } votes</p>
+        <div>
+          <button onClick={handleVote}>Vote</button>
+          <button onClick={handleNext}>Next Anecdote</button>
+        </div>
       </div>
+      {getTopVoted()}
     </div>
   )
 }
