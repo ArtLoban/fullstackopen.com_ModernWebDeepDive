@@ -2,6 +2,25 @@ import { useState } from 'react'
 
 const Button = ({ text, handleClick }) => <button onClick={handleClick}>{text}</button>
 
+const Statistics = ({data}) => {
+  const {good, neutral, bad, total, average, positive} = data
+
+  return (
+    <div>
+      <h2>Statistics</h2>
+      <div>
+        <p>Good: {good}</p>
+        <p>Neutral: {neutral}</p>
+        <p>Bad: {bad}</p>
+        <hr/>
+        <p>All: {total}</p>
+        <p>Average: {isNaN(average) ? 0 : average}</p>
+        <p>Positive: {isNaN(positive) ? 0 : positive}%</p>
+      </div>
+    </div>
+  )
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -20,17 +39,7 @@ const App = () => {
         <Button text="Neutral" handleClick={() => setNeutral(neutral+1)} />
         <Button text="Bad" handleClick={() => setBad(bad+1)} />
       </div>
-
-      <h2>Statistics</h2>
-      <div>
-        <p>Good: {good}</p>
-        <p>Neutral: {neutral}</p>
-        <p>Bad: {bad}</p>
-        <hr/>
-        <p>All: {total}</p>
-        <p>Average: {isNaN(average) ? 0 : average}</p>
-        <p>Positive: {isNaN(positive) ? 0 : positive}%</p>
-      </div>
+      <Statistics data={{good, neutral, bad, total, average, positive}} />
     </div>
   )
 }
