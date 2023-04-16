@@ -2,13 +2,18 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', phone: '040-1234567' }
+    { name: 'Arto Hellas', phone: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', phone: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', phone: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', phone: '39-23-6423122', id: 4 }
   ])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
+  const [term, newTerm] = useState('')
 
   const onFormSubmit = (e) => {
     e.preventDefault()
+
     const trimmedName = newName.trim();
     const trimmedPhone = newPhone.trim();
 
@@ -27,7 +32,15 @@ const App = () => {
   }
 
   const renderPhones = () => {
-    return persons.map((person, i) => {
+    let items = persons;
+
+    if (term.trim().length > 0) {
+      items = persons.filter(person => {
+        return person.name.toLowerCase().indexOf(term.trim().toLowerCase())  !== -1
+      })
+    }
+
+    return items.map((person, i) => {
       return <p key={person.name + i}>{person.name} {person.phone}</p>
     })
   }
@@ -35,6 +48,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        Filter shown with: <input value={term} onChange={e => newTerm(e.target.value)} />
+      </div>
+
+      <h2>Add new</h2>
       <form onSubmit={onFormSubmit}>
         <div>
           <div>
