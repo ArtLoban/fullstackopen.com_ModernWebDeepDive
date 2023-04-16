@@ -8,8 +8,18 @@ const App = () => {
 
   const onFormSubmit = (e) => {
     e.preventDefault()
+    const trimmedName = newName.trim();
 
-    setPersons([...persons, { name:newName }])
+    if(trimmedName.length === 0) return
+
+    const found = persons.find(person => person.name === trimmedName);
+
+    if (typeof found !== 'undefined') {
+      alert(`${trimmedName} is already added to phonebook`)
+      return
+    }
+
+    setPersons([...persons, {name:trimmedName}])
     setNewName('')
   }
 
