@@ -1,15 +1,15 @@
 import {useState} from 'react';
-import axios from 'axios';
+import { create as createPerson } from '../services/persons'
 
 const PersonForm = ({ persons, addPerson }) => {
-  const [newName, setNewName] = useState('')
-  const [newPhone, setNewPhone] = useState('')
+  const [name, setName] = useState('')
+  const [number, setNumber] = useState('')
 
   const onFormSubmit = (e) => {
     e.preventDefault()
 
-    const trimmedName = newName.trim();
-    const trimmedPhone = newPhone.trim();
+    const trimmedName = name.trim();
+    const trimmedPhone = number.trim();
 
     if(trimmedName.length === 0 || trimmedPhone.length === 0) return
 
@@ -20,15 +20,13 @@ const PersonForm = ({ persons, addPerson }) => {
       return
     }
 
-    const newPerson = {
+    createPerson({
       name: trimmedName,
       number: trimmedPhone
-    }
-
-    axios.post('http://localhost:3001/persons', newPerson).then(response => {
-      addPerson  ([...persons, response.data])
-      setNewName('')
-      setNewPhone('')
+    }).then(newPerson => {
+      addPerson  ([...persons, newPerson])
+      setName('')
+      setNumber('')
     })
   }
 
@@ -36,10 +34,10 @@ const PersonForm = ({ persons, addPerson }) => {
     <form onSubmit={onFormSubmit}>
       <div>
         <div>
-          name: <input value={newName} onChange={e => setNewName(e.target.value)} />
+          name: <input value={name} onChange={e => setName(e.target.value)} />
         </div>
         <div>
-          number: <input value={newPhone} onChange={e => setNewPhone(e.target.value)} />
+          number: <input value={number} onChange={e => setNumber(e.target.value)} />
         </div>
       </div>
       <div>
