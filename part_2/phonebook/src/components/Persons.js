@@ -6,7 +6,7 @@ const Persons = ({ persons, term }) => {
   }
 
   return persons.map((person, i) => {
-    return <p key={person.name + i}>{person.name} {person.phone}</p>
+    return <p key={person.name + i}>{person.name} {person.number}</p>
   })
 }
 

@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import axios from 'axios';
 
 const PersonForm = ({ persons, addPerson }) => {
   const [newName, setNewName] = useState('')
@@ -19,9 +20,16 @@ const PersonForm = ({ persons, addPerson }) => {
       return
     }
 
-    addPerson([...persons, {name: trimmedName, phone: trimmedPhone}])
-    setNewName('')
-    setNewPhone('')
+    const newPerson = {
+      name: trimmedName,
+      number: trimmedPhone
+    }
+
+    axios.post('http://localhost:3001/persons', newPerson).then(response => {
+      addPerson  ([...persons, response.data])
+      setNewName('')
+      setNewPhone('')
+    })
   }
 
   return (
