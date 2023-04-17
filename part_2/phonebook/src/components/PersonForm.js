@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { create as createPerson } from '../services/persons'
+import { createPerson } from '../services/persons'
 
 const PersonForm = ({ persons, addPerson }) => {
   const [name, setName] = useState('')

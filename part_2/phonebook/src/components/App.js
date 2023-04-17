@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getAll as getPersons } from '../services/persons'
+import { getPersons } from '../services/persons'
 
 import Filter from './Filter';
 import PersonForm from './PersonForm';
@@ -24,7 +24,7 @@ const App = () => {
       <PersonForm persons={persons} addPerson={setPersons} />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} term={term} />
+      <Persons persons={persons} term={term} updateData={setPersons} />
     </div>
   )
 }
