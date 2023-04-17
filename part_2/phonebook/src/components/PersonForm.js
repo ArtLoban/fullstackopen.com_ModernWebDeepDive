@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import { createPerson } from '../services/persons'
+import { createPerson, updatePerson } from '../services/persons'
 
-const PersonForm = ({ persons, addPerson }) => {
+const PersonForm = ({ persons, updatePersons }) => {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
 
@@ -15,19 +15,36 @@ const PersonForm = ({ persons, addPerson }) => {
 
     const found = persons.find(person => person.name === trimmedName);
 
-    if (typeof found !== 'undefined') {
+    if (typeof found === 'undefined') {
+      createPerson({
+        name: trimmedName,
+        number: trimmedPhone
+      }).then(newPerson => {
+        updatePersons([...persons, newPerson])
+        resetInputs()
+      })
+
+      return
+    }
+
+    if (found.number === trimmedPhone) {
       alert(`${trimmedName} is already added to phonebook`)
       return
     }
 
-    createPerson({
-      name: trimmedName,
-      number: trimmedPhone
-    }).then(newPerson => {
-      addPerson  ([...persons, newPerson])
-      setName('')
-      setNumber('')
+    if (!window.confirm(`${trimmedName} is already added to phonebook. Replace the old number with a new one?`)) {
+      return
+    }
+
+    updatePerson(found.id, {...found, number:trimmedPhone }).then(updatedPerson => {
+      updatePersons(persons.map(person => person.id !== found.id ? person : updatedPerson))
+      resetInputs()
     })
+  }
+
+  const resetInputs = () => {
+    setName('')
+    setNumber('')
   }
 
   return (

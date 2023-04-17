@@ -21,7 +21,7 @@ const App = () => {
       <Filter term={term} handleChange={newTerm} />
 
       <h3>Add a new</h3>
-      <PersonForm persons={persons} addPerson={setPersons} />
+      <PersonForm persons={persons} updatePersons={setPersons} />
 
       <h2>Numbers</h2>
       <Persons persons={persons} term={term} updateData={setPersons} />
