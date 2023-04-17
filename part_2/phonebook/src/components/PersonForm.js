@@ -11,7 +11,13 @@ const PersonForm = ({ persons, updatePersons, setMessage }) => {
     const trimmedName = name.trim();
     const trimmedPhone = number.trim();
 
-    if(trimmedName.length === 0 || trimmedPhone.length === 0) return
+    if (trimmedName.length === 0 || trimmedPhone.length === 0) {
+      setMessage({
+        body: `Field cannot be empty`,
+        status: 'error'
+      })
+      return null
+    }
 
     const found = persons.find(person => person.name === trimmedName);
 
@@ -21,13 +27,11 @@ const PersonForm = ({ persons, updatePersons, setMessage }) => {
         number: trimmedPhone
       }).then(newPerson => {
         updatePersons([...persons, newPerson])
+
         setMessage({
           body: `Added ${newPerson.name}`,
           status: 'success'
         })
-        setTimeout(() => {
-          setMessage(null)
-        }, 2000)
 
         resetInputs()
       })
@@ -44,18 +48,25 @@ const PersonForm = ({ persons, updatePersons, setMessage }) => {
       return
     }
 
-    updatePerson(found.id, {...found, number:trimmedPhone }).then(updatedPerson => {
-      updatePersons(persons.map(person => person.id !== found.id ? person : updatedPerson))
-      setMessage({
-        body: `${updatedPerson.name} updated`,
-        status: 'success'
-      })
-      setTimeout(() => {
-        setMessage(null)
-      }, 2000)
+    updatePerson(found.id, {...found, number:trimmedPhone })
+      .then(updatedPerson => {
+        updatePersons(persons.map(person => person.id !== found.id ? person : updatedPerson))
 
-      resetInputs()
-    })
+        setMessage({
+          body: `${updatedPerson.name} updated`,
+          status: 'success'
+        })
+
+        resetInputs()
+      })
+      .catch(e => {
+        updatePersons(persons.filter(person => person.id !== found.id))
+        setMessage({
+          body: `Information of ${found.name} has already removed from server`,
+          status: 'error'
+        })
+        console.error(`Server response: ${e.message}`);
+      })
   }
 
   const resetInputs = () => {

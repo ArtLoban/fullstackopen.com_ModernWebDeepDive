@@ -1,4 +1,4 @@
-const Notification = ({ message }) => {
+const Notification = ({ message, setMessage }) => {
   if (message === null) {
     return null
   }
@@ -13,11 +13,21 @@ const Notification = ({ message }) => {
       className += ' success'
   }
 
-  return (
-    <div className={className}>
-      {message.body}
-    </div>
-  )
+  const renderMessage = () => {
+    const duration = message.duration || 2000
+
+    setTimeout(() => {
+      setMessage(null)
+    }, duration)
+
+    return (
+      <div className={className}>
+        {message.body}
+      </div>
+    )
+  }
+
+  return renderMessage()
 }
 
 export default Notification

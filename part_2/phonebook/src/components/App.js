@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={message} />
+      <Notification message={message} setMessage={setMessage} />
       <h2>Phonebook</h2>
       <Filter term={term} handleChange={newTerm} />
 
@@ -27,7 +27,7 @@ const App = () => {
       <PersonForm persons={persons} updatePersons={setPersons} setMessage={setMessage} />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} term={term} updateData={setPersons} />
+      <Persons persons={persons} term={term} updateData={setPersons} setMessage={setMessage} />
     </div>
   )
 }
