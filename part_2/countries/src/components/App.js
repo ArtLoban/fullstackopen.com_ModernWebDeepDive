@@ -4,6 +4,7 @@ import fetchCountries from '../services/countries'
 import Search from './Search';
 import Countries from './Countries';
 import Country from './Country';
+import Weather from './Weather';
 
 const App = () => {
   const [countriesData, setCountriesData] = useState(null)
@@ -21,6 +22,7 @@ const App = () => {
       <Search countries={countriesData} setCountries={setCountries} setSelected={setSelected} />
       <Countries countries={countries} setSelected={setSelected} />
       <Country country={selected} />
+      <Weather country={selected} />
     </div>
   );
 }
