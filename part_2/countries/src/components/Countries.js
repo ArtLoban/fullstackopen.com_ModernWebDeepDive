@@ -1,47 +1,36 @@
-const Countries = ({ countries, term }) => {
-  if (countries === null) return null
 
-  if (term.trim().length < 1) {
+const Countries = ({ countries, setSelected }) => {
+  if (!countries) {
     return <p>...start typing country name</p>
   }
 
-  const countryList = countries.filter(country => {
-    return country.name.common.toLowerCase().indexOf(term.trim().toLowerCase()) !== -1
-  })
-
-  if (countryList.length > 10) {
+  if (countries.length > 10) {
     return <p>Too many matches, specify another filter</p>
   }
 
-  const renderCountry = () => {
-    const country = countryList[0];
+  const onCountrySelect = (name) => {
+    const found = countries.find(country => {
+      return country.name.common === name
+    })
 
-    return (
-      <>
-        <h1>{country.name.common}</h1>
-        <div>Capital {country.capital}</div>
-        <div>Area {country.area}</div>
-
-        <p><b>Languages:</b></p>
-        <ul>
-          {Object.values(country.languages).map(lang => <li key={lang}>{lang}</li>)}
-        </ul>
-
-        <div>
-          <img src={country.flags.png} width="100" height="100" alt="flag" />
-        </div>
-      </>
-    )
+    if (typeof found !== 'undefined') {
+      setSelected(found)
+    }
   }
 
   const renderCountries = () => {
-    return countryList.map(country => <div key={country.name.common}>{country.name.common}</div>)
+    return countries.map(country => {
+      return (
+        <div key={country.name.common}>
+          <span style={{marginRight: 10}}>{country.name.common}</span>
+          <button onClick={() => onCountrySelect(country.name.common)}>Show</button>
+        </div>
+      )
+    })
   }
 
   return (
-    <div>
-      { countryList.length === 1 ? renderCountry() : renderCountries() }
-    </div>
+    <div>{renderCountries()}</div>
   )
 }
 
