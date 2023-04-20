@@ -80,13 +80,20 @@ app.post('/api/persons', (request, response) => {
   const body = request.body      // Without the json-parser, the body property would be undefined.
 
   if (!body.name) {
-    return response.status(400).json({
+    return response.status(403).json({
       error: 'Name is required!'
     })
   }
   if (!body.number) {
-    return response.status(400).json({
+    return response.status(403).json({
       error: 'Phone number is required!'
+    })
+  }
+
+  const exists = persons.find(person => person.name === body.name)
+  if (exists) {
+    return response.status(403).json({
+      error: 'A record with the same name is already exists!'
     })
   }
 
@@ -105,4 +112,3 @@ const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
-
