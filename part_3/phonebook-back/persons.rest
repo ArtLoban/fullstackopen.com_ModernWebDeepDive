@@ -1,0 +1,19 @@
+### Fetches All `Persons` resource
+GET http://localhost:3001/api/persons
+
+### Fetches a single `Person` resource
+GET http://localhost:3001/api/persons/2
+
+### Removes the identified `Person` resource
+DELETE http://localhost:3001/api/persons/2
+
+### Creates new `Person` resource
+POST http://localhost:3001/api/persons/
+Content-Type: application/json
+
+{
+  "name": "John",
+  "number": "12-34-567890"
+}
+
+###

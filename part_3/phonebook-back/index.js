@@ -26,15 +26,32 @@ let persons = [
   }
 ]
 
+const getInfo = () => {
+  let info = `<p>Phonebook has info for ${persons.length} people</p>`;
+
+  const date = new Date()
+  info += `<p>${date}</p>`
+
+  return info
+}
+
 app.get('/', (request, response) => {
-  response.send('<h1>Persons Backend App!</h1>')
+  const body = `
+    <h1>Persons Backend App!</h1>
+    <a href="/info">See Info</a><br>
+    <a href="/api/persons">See Persons</a>
+  `
+
+  response.send(body)
+})
+
+app.get('/info', (request, response) => {
+  response.send(getInfo())
 })
 
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
-
-
 
 const PORT = 3001
 app.listen(PORT, () => {
