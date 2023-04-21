@@ -4,7 +4,10 @@ const morgan = require('morgan')      // HTTP request logger middleware for node
 const app = express()
 
 app.use(express.json())
-app.use(morgan('tiny'))
+
+// Add logger custom `body` token
+morgan.token('body', req => JSON.stringify(req.body))
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let persons = [
   {
