@@ -1,9 +1,11 @@
 const express = require('express')
+const cors = require('cors')
 const morgan = require('morgan')      // HTTP request logger middleware for node.js
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 // Add logger custom `body` token
 morgan.token('body', req => JSON.stringify(req.body))
@@ -43,7 +45,7 @@ const getInfo = () => {
 
 app.get('/', (request, response) => {
   const body = `
-    <h1>Persons Backend App!</h1>
+    <h1>PhoneBook Backend App!</h1>
     <a href="/info">See Info</a><br>
     <a href="/api/persons">See Persons</a>
   `
