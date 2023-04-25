@@ -4,6 +4,8 @@ const morgan = require('morgan')      // HTTP request logger middleware for node
 
 const app = express()
 
+app.use(express.static('build'))
+
 app.use(express.json())
 app.use(cors())
 
