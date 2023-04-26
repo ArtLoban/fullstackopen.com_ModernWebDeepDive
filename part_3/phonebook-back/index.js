@@ -62,11 +62,13 @@ app.get('/info', (request, response) => {
 })
 
 
-// GET All Person
+// GET All People
 app.get('/api/persons', (request, response) => {
-  Person.find({}).then(people => {
-    response.json(people)
-  })
+  Person.find({})
+    .then(people => {
+      response.json(people)
+    })
+    .catch(error => next(error))
 })
 
 // GET Single Person
@@ -110,10 +112,25 @@ app.post('/api/persons', (request, response) => {
     number: body.number
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+// this has to be the last loaded middleware.
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
