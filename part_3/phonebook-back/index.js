@@ -62,7 +62,7 @@ app.get('/info', (request, response) => {
 })
 
 
-// fetchAll
+// Fetch all
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(people => {
     console.log(people);
@@ -71,6 +71,7 @@ app.get('/api/persons', (request, response) => {
   })
 })
 
+// Fetch single
 app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(person => person.id === id)
@@ -89,13 +90,9 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
-
-const generateId = () => {
-  return Math.floor(Math.random() * 1000000)
-}
-
+// Create new
 app.post('/api/persons', (request, response) => {
-  const body = request.body      // Without the json-parser, the body property would be undefined.
+  const body = request.body
 
   if (!body.name) {
     return response.status(403).json({
@@ -108,22 +105,14 @@ app.post('/api/persons', (request, response) => {
     })
   }
 
-  const exists = persons.find(person => person.name === body.name)
-  if (exists) {
-    return response.status(403).json({
-      error: 'A record with the same name is already exists!'
-    })
-  }
-
-  const person = {
-    id: generateId(),
+  const person = new Person({
     name: body.name,
     number: body.number
-  }
+  })
 
-  persons = persons.concat(person)
-
-  response.json(person)
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
 
 const PORT = process.env.PORT || 3001
