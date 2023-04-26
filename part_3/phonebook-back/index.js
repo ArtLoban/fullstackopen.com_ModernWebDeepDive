@@ -1,6 +1,8 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')      // HTTP request logger middleware for node.js
+const Person = require('./models/person')
 
 const app = express()
 
@@ -59,8 +61,14 @@ app.get('/info', (request, response) => {
   response.send(getInfo())
 })
 
+
+// fetchAll
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({}).then(people => {
+    console.log(people);
+
+    response.json(people)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
