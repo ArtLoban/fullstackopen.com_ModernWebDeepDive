@@ -5,7 +5,7 @@ GET http://localhost:3001/api/persons
 GET http://localhost:3001/api/persons/2
 
 ### Removes the identified `Person` resource
-DELETE http://localhost:3001/api/persons/3
+DELETE http://localhost:3001/api/persons/644980a2ae6e6d1364f8253c
 
 ### Creates new `Person` resource
 POST http://localhost:3001/api/persons/

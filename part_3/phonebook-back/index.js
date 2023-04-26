@@ -62,16 +62,14 @@ app.get('/info', (request, response) => {
 })
 
 
-// Fetch all
+// GET All Person
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(people => {
-    console.log(people);
-
     response.json(people)
   })
 })
 
-// Fetch single
+// GET Single Person
 app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   const person = persons.find(person => person.id === id)
@@ -83,14 +81,16 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
-app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-
-  response.status(204).end()
+// DELETE Person
+app.delete('/api/persons/:id', (request, response, next) => {
+  Person.findByIdAndRemove(request.params.id)
+  .then(result => {
+    response.status(204).end()
+  })
+  .catch(error => next(error))
 })
 
-// Create new
+// POST new Person
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
