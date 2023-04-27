@@ -35,6 +35,15 @@ const PersonForm = ({ persons, updatePersons, setMessage }) => {
 
         resetInputs()
       })
+      .catch(error => {
+        console.log('error.response.data.error: ', error.response.data.error);
+
+        setMessage({
+          body: error.response?.data?.error || 'Validation Error',
+          status: 'error',
+          duration: 5000
+        })
+      })
 
       return
     }
