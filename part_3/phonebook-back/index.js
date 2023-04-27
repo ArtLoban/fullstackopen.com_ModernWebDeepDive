@@ -29,7 +29,7 @@ app.get('/', (request, response) => {
 })
 
 // Just Info
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
   Person.find({})
   .then(people => {
     response.send(getInfo(people.length))
@@ -40,7 +40,7 @@ app.get('/info', (request, response) => {
 /*** Person resources ***/
 
 // GET All People
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
   Person.find({})
     .then(people => {
       response.json(people)
@@ -66,7 +66,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 // DELETE Person
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-  .then(result => {
+  .then(() => {
     response.status(204).end()
   })
   .catch(error => next(error))
@@ -142,7 +142,7 @@ app.listen(PORT, () => {
 
 
 const getInfo = (count) => {
-  let info = `<p>Phonebook has info for ${count} people</p>`;
+  let info = `<p>Phonebook has info for ${count} people</p>`
 
   const date = new Date()
   info += `<p>${date}</p>`

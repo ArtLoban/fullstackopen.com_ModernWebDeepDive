@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../../part_2/phonebook && npm run build && cp -r build ../../part_3/phonebook-back",
-    "deploy:full": "npm run build:ui && cd ../.. && git add . && git commit -m uibuild && git push origin master"
+    "deploy:full": "npm run build:ui && cd ../.. && git add . && git commit -m uibuild && git push origin master",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.39.0",
     "nodemon": "^2.0.22"
   }
 }

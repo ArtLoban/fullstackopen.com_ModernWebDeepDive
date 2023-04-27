@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const argsCount = process.argv.length;
+const argsCount = process.argv.length
 
 if (argsCount < 3 || process.argv[2].trim().length === 0) {
   console.log('Give MongoDB password value as a third argument!')
@@ -50,8 +50,8 @@ function handleRequest(type = '', data = {}) {
   }
 
   if (type === 'create') {
-    const {name, number} = data
-    const person = new Person({name, number})
+    const { name, number } = data
+    const person = new Person({ name, number })
 
     person.save().then(result => {
       console.log(`Added ${result?.name} number ${result?.number} to phonebook`)
