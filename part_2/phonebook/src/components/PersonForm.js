@@ -68,13 +68,14 @@ const PersonForm = ({ persons, updatePersons, setMessage }) => {
 
         resetInputs()
       })
-      .catch(e => {
-        updatePersons(persons.filter(person => person.id !== found.id))
+      .catch(error => {
+        console.log('error.response.data.error: ', error.response.data.error);
+
         setMessage({
-          body: `Information of ${found.name} has already removed from server`,
-          status: 'error'
+          body: error.response?.data?.error || 'Validation Error',
+          status: 'error',
+          duration: 5000
         })
-        console.error(`Server response: ${e.message}`);
       })
   }
 
