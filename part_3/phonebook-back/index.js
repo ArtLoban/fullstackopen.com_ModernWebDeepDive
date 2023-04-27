@@ -122,7 +122,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
+  console.log('\x1b[31m%s\x1b[0m', `Caught in errorHandler: ${error.message}`)
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
