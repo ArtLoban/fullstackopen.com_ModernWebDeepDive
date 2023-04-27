@@ -31,10 +31,10 @@ app.get('/', (request, response) => {
 // Just Info
 app.get('/info', (request, response, next) => {
   Person.find({})
-  .then(people => {
-    response.send(getInfo(people.length))
-  })
-  .catch(error => next(error))
+    .then(people => {
+      response.send(getInfo(people.length))
+    })
+    .catch(error => next(error))
 })
 
 /*** Person resources ***/
@@ -51,25 +51,25 @@ app.get('/api/persons', (request, response, next) => {
 // GET Single Person
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-  .then(person => {
-    if (person) {
-      response.json(person)
-    } else {
-      response.status(404).end()
-    }
-  })
-  .catch(error => {
-    next(error)
-  })
+    .then(person => {
+      if (person) {
+        response.json(person)
+      } else {
+        response.status(404).end()
+      }
+    })
+    .catch(error => {
+      next(error)
+    })
 })
 
 // DELETE Person
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-  .then(() => {
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(() => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 // POST new Person
@@ -109,10 +109,10 @@ app.put('/api/persons/:id', (request, response, next) => {
   }
 
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
-  .then(updatedPerson => {
-    response.json(updatedPerson)
-  })
-  .catch(error => next(error))
+    .then(updatedPerson => {
+      response.json(updatedPerson)
+    })
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
