@@ -1,5 +1,5 @@
 const dummy = (blogs) => {
-  return 1
+  return blogs.length
 }
 
 const totalLikes = (blogs) => {
@@ -8,7 +8,22 @@ const totalLikes = (blogs) => {
   }, 0)
 }
 
+const favoriteBlog = (blogs) => {
+  let mostLikedBlog = blogs[0]
+
+  for (let i = 1; i < blogs.length; i++) {
+    if (blogs[i].likes > mostLikedBlog.likes) {
+      mostLikedBlog = blogs[i]
+    }
+  }
+
+  const { title, author, likes } = mostLikedBlog
+
+  return { title, author, likes }
+}
+
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favoriteBlog
 }
