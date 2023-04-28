@@ -1,0 +1,15 @@
+### Fetches `Blog` resources
+GET http://localhost:3001/api/blogs
+
+### Send POST request with json body
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Test Blog",
+  "author": "John",
+  "url": "https://google.com",
+  "likes": 0
+}
+
+###
