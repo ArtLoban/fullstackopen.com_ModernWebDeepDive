@@ -38,9 +38,24 @@ const mostBlogs = (blogs) => {
   }
 }
 
+// @see screen info: https://i.imgur.com/mGpQ8rh.png
+const mostLikes = (blogs) => {
+  const grouped = _.groupBy(blogs, 'author')    // Group the blogs by author
+  const authorLikes = _.map(grouped, (blogs, author) => {
+    return {
+      author: author,
+      likes: _.sumBy(blogs, 'likes')    //  Total number of likes for each author
+    }
+  })
+  const sorted = _.orderBy(authorLikes, 'likes', 'desc')
+
+  return sorted[0]
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
