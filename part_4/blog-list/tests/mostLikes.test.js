@@ -4,7 +4,7 @@ const blogs = require('./blogsData')
 describe('most likes', () => {
   const author = {
     author: 'Edsger W. Dijkstra',
-    likes: 1
+    likes: 17
   }
 
   test('has author from the collection of items', () => {
