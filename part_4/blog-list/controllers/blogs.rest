@@ -12,4 +12,7 @@ Content-Type: application/json
   "likes": 0
 }
 
+### Removes the identified `Blogs` resource
+DELETE http://localhost:3001/api/blogs/644fb280bd76d5ce6b9df935
+
 ###
