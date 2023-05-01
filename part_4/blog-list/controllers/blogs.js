@@ -14,8 +14,13 @@ blogsRouter.post('/', async (request, response, next) => {
   const body = request.body
 
   if (!body.title) {
-    return response.status(403).json({
+    return response.status(400).json({
       error: 'Title is required!'
+    })
+  }
+  if (!body.url) {
+    return response.status(400).json({
+      error: 'URL is required!'
     })
   }
 

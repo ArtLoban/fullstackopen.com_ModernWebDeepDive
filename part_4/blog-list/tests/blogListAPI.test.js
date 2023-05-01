@@ -75,6 +75,24 @@ test('missing likes property defaults to 0', async () => {
   expect(resultBlog.body.likes).toBe(0)
 })
 
+/**
+ * Run: $ npm test -- -t "missing properties quaies 400 responce"
+ */
+test('missing properties quaies 400 responce', async () => {
+  const newBlog = {
+    title: 'New Post without author property',
+    author: 'Dev',
+    likes: 7,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+})
+
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
