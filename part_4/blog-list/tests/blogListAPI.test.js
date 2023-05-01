@@ -110,6 +110,30 @@ describe('deletion of a blog', () => {
   })
 })
 
+// Run: $ npm test -- -t "updating of blog"
+describe('updating of blog', () => {
+  test('succeeds with valid data', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const data = {
+      likes: 23
+    }
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(data)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAfterUpdate = await helper.blogsInDb()
+    const blogAfterUpdate = blogsAfterUpdate[0]
+
+    expect(blogAfterUpdate.likes).toBeDefined()
+    expect(blogAfterUpdate.likes).toBe(data.likes)
+  })
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
