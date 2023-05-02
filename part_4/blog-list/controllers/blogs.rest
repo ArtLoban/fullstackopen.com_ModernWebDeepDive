@@ -4,7 +4,7 @@ GET http://localhost:3001/api/blogs
 ### Send POST request with json body
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFydGRldiIsImlkIjoiNjQ1MGU1ZGMwMWFhYWFlMWMwNTE4NzFiIiwiaWF0IjoxNjgzMDI5NTI3LCJleHAiOjE2ODMwMzMxMjd9.mQ4YqlsPvhKMQO7s8-NVE9SL4t7UQyk2Zl7F6JMUdmU
+Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFydGRldiIsImlkIjoiNjQ1MGU1ZGMwMWFhYWFlMWMwNTE4NzFiIiwiaWF0IjoxNjgzMDMzMTc2LCJleHAiOjE2ODMwMzY3NzZ9.5MDuq38lkI6wr20SDjVGjUwMkP3BxtFHjqsyLuo4iBk
 
 {
   "title": "First class tests",
@@ -28,7 +28,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFyd
 //}
 
 ### Removes the identified `Blogs` resource
-DELETE http://localhost:3001/api/blogs/6450f1adf35fd879679bcf8e
+DELETE http://localhost:3001/api/blogs/6451077df94d96a9dced1fd4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFydGRldiIsImlkIjoiNjQ1MGU1ZGMwMWFhYWFlMWMwNTE4NzFiIiwiaWF0IjoxNjgzMDMzMjU5LCJleHAiOjE2ODMwMzY4NTl9._-UVB4wVC5iQEZ7CtMqvl9iuQkp42UFTfup7ktdbJAo
 
 ### Send PUT request with json body
 PUT http://localhost:3001/api/blogs/644fb280bd76d5ce6b9df934
@@ -39,3 +40,4 @@ Content-Type: application/json
 }
 
 ###
+
