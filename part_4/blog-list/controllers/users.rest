@@ -8,7 +8,7 @@ Content-Type: application/json
 //{
 //  "username": "artdev",
 //  "name": "Art",
-//  "password": "salainen"
+//  "password": "artdev"
 //}
 {
   "username": "testuser",

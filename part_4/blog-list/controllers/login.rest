@@ -1,0 +1,15 @@
+### Send POST request with json body
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "artdev",
+  "password": "artdev"
+}
+
+###
+
+//{
+//  "username": "testuser",
+//  "password": "testuser"
+//}
