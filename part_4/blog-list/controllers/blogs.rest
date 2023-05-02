@@ -4,13 +4,13 @@ GET http://localhost:3001/api/blogs
 ### Send POST request with json body
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFydGRldiIsImlkIjoiNjQ1MGU1ZGMwMWFhYWFlMWMwNTE4NzFiIiwiaWF0IjoxNjgzMDI5NTI3LCJleHAiOjE2ODMwMzMxMjd9.mQ4YqlsPvhKMQO7s8-NVE9SL4t7UQyk2Zl7F6JMUdmU
 
 {
-  "title": "Canonical string reduction",
-  "author": "Edsger W. Dijkstra",
-  "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
-  "likes": 3,
-  "userId": "6450f163f35fd879679bcf89"
+  "title": "First class tests",
+  "author": "Robert C. Martin",
+  "url": "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
+  "likes": 10
 }
 //{
 //  "title": "React patterns",
