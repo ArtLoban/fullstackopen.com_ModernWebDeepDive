@@ -6,14 +6,29 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Test Blog 3",
-  "author": "John 3",
-  "url": "https://google.com",
-  "likes": 0
+  "title": "Canonical string reduction",
+  "author": "Edsger W. Dijkstra",
+  "url": "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+  "likes": 3,
+  "userId": "6450f163f35fd879679bcf89"
 }
+//{
+//  "title": "React patterns",
+//  "author": "Michael Chan",
+//  "url": "https://reactpatterns.com/",
+//  "likes": 7,
+//  "userId": "6450e5dc01aaaae1c051871b"
+//}
+//{
+//  "title": "Go To Statement Considered Harmful",
+//  "author": "Edsger W. Dijkstra",
+//  "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+//  "likes": 5,
+//  "userId": "6450e5dc01aaaae1c051871b"
+//}
 
 ### Removes the identified `Blogs` resource
-DELETE http://localhost:3001/api/blogs/644fb280bd76d5ce6b9df935
+DELETE http://localhost:3001/api/blogs/6450f1adf35fd879679bcf8e
 
 ### Send PUT request with json body
 PUT http://localhost:3001/api/blogs/644fb280bd76d5ce6b9df934
