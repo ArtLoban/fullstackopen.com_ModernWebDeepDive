@@ -12,6 +12,8 @@ const LoginForm = ({ setUser }) => {
       const user = await loginService.login({username, password})
 
       if (typeof user.token !== 'undefined') {
+        window.localStorage.setItem('appUser', JSON.stringify(user))
+
         setUser(user)
         setUsername('')
         setPassword('')
