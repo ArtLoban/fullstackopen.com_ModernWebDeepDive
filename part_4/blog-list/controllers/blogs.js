@@ -27,6 +27,11 @@ blogsRouter.post('/', async (request, response, next) => {
       error: 'Title is required!'
     })
   }
+  if (!body.author) {
+    return response.status(400).json({
+      error: 'Author is required!'
+    })
+  }
   if (!body.url) {
     return response.status(400).json({
       error: 'URL is required!'

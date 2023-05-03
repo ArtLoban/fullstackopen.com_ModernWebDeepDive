@@ -3,10 +3,12 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
+import Notification from './components/Notification';
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     const appUserJSON = window.localStorage.getItem('appUser')
@@ -35,22 +37,26 @@ const App = () => {
     )
   }
 
-  if (user === null) {
+  const renderContent = () => {
+    if (user === null) {
+      return <LoginForm setUser={setUser} setMessage={setMessage} />
+    }
+
     return (
-      <div>
-        <h2>Log in to application</h2>
-        <LoginForm setUser={setUser} />
-      </div>
+      <>
+        { renderUser() }
+        <BlogForm blogs={blogs} updateBlogs={setBlogs} setMessage={setMessage} />
+        <hr/>
+        { blogs.map(blog => <Blog key={blog.id} blog={blog} />) }
+      </>
     )
   }
 
   return (
     <div>
       <h1>Blogs</h1>
-      { user && renderUser() }
-      <BlogForm blogs={blogs} updateBlogs={setBlogs} />
-      <hr/>
-      { blogs.map(blog => <Blog key={blog.id} blog={blog} />) }
+      <Notification message={message} setMessage={setMessage} />
+      { renderContent() }
     </div>
   )
 }
