@@ -35,6 +35,8 @@ const App = () => {
       return <LoginForm setUser={setUser} setMessage={setMessage} />
     }
 
+    console.log(blogs);
+
     return (
       <>
         <div>
@@ -46,7 +48,10 @@ const App = () => {
           <BlogForm blogs={blogs} updateBlogs={setBlogs} setMessage={setMessage} blogFormRef={blogFormRef} />
         </Togglable>
         <hr/>
-        { blogs.map(blog => <Blog key={blog.id} blog={blog} blogs={blogs} updateBlogs={setBlogs} />) }
+        { blogs
+          .sort((a,b) => b.likes - a.likes)
+          .map(blog => <Blog key={blog.id} blog={blog} blogs={blogs} updateBlogs={setBlogs} />)
+        }
       </>
     )
   }
