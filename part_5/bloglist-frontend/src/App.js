@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
+import BlogList from './components/BlogList';
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -35,8 +35,6 @@ const App = () => {
       return <LoginForm setUser={setUser} setMessage={setMessage} />
     }
 
-    console.log(blogs);
-
     return (
       <>
         <div>
@@ -48,10 +46,7 @@ const App = () => {
           <BlogForm blogs={blogs} updateBlogs={setBlogs} setMessage={setMessage} blogFormRef={blogFormRef} />
         </Togglable>
         <hr/>
-        { blogs
-          .sort((a,b) => b.likes - a.likes)
-          .map(blog => <Blog key={blog.id} blog={blog} blogs={blogs} updateBlogs={setBlogs} />)
-        }
+        <BlogList blogs={blogs} updateBlogs={setBlogs} user={user} />
       </>
     )
   }
