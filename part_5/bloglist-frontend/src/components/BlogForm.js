@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const BlogForm = ({ blogs, updateBlogs, setMessage }) => {
+const BlogForm = ({ blogs, updateBlogs, setMessage, blogFormRef }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setURL] = useState('')
@@ -16,6 +16,7 @@ const BlogForm = ({ blogs, updateBlogs, setMessage }) => {
       setTitle('')
       setAuthor('')
       setURL('')
+      blogFormRef.current.toggleVisibility()
 
       setMessage({
         body: `A new blog ${title} by ${author} added`,
