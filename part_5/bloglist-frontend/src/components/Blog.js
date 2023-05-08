@@ -3,6 +3,8 @@ import { useState } from 'react'
 const Blog = ({blog}) => {
   const [visible, toggleVisible] = useState(false);
 
+  console.log(blog);
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -14,7 +16,7 @@ const Blog = ({blog}) => {
   return (
     <div style={blogStyle}>
       <div>
-        {blog.title}
+        <span>{blog.title} by {blog.author}</span>
         <button
           onClick={() => toggleVisible(!visible)}
           style={{marginLeft: '10px'}}
@@ -28,7 +30,7 @@ const Blog = ({blog}) => {
             <span>likes {blog.likes}</span>
             <button type="button" style={{marginLeft: '10px'}}>Like</button>
           </div>
-          <span>{blog.author}</span>
+          <span>{blog.user?.name}</span>
         </div>
       }
     </div>
