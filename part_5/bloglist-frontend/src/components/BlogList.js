@@ -1,6 +1,6 @@
-import Blog from './Blog';
+import Blog from './Blog'
 
-const BlogList = ({ blogs, updateBlogs, user}) => {
+const BlogList = ({ blogs, updateBlogs, user }) => {
 
   return (
     <div >

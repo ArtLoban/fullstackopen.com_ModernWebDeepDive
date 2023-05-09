@@ -3,14 +3,14 @@ const Notification = ({ message, setMessage }) => {
     return null
   }
 
-  let className = 'msg';
+  let className = 'msg'
 
   switch (message.status) {
-    case 'error':
-      className += ' error'
-      break
-    case 'success':
-      className += ' success'
+  case 'error':
+    className += ' error'
+    break
+  case 'success':
+    className += ' success'
   }
 
   const renderMessage = () => {
