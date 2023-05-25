@@ -11,6 +11,25 @@ const App = () => {
     })
   }
 
+  const onFormSumbit = (e) => {
+    e.preventDefault()
+
+    const value = e.target.text.value.trim()
+
+    if (value.length === 0) {
+      alert('Cannot be empty!')
+      e.target.text.value = ''
+      return
+    }
+
+    dispatch({
+      type: 'CREATE_ANECDOTE',
+      payload: value
+    })
+
+    e.target.text.value = ''
+  }
+
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -26,8 +45,10 @@ const App = () => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
+      <form onSubmit={onFormSumbit}>
+        <div>
+          <input name="text" />
+        </div>
         <button>create</button>
       </form>
     </div>
