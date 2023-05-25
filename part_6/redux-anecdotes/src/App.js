@@ -1,16 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { createAnecdote, voteAnecdote } from './reducers/anecdoteReducer'
 
 const App = () => {
   const anecdotes = useSelector(state => state)
   const dispatch = useDispatch()
 
-  console.log(anecdotes);
-
   const vote = (id) => {
-    dispatch({
-      type: 'VOTE',
-      payload: {id}
-    })
+    dispatch(voteAnecdote(id))
   }
 
   const onFormSumbit = (e) => {
@@ -24,11 +20,7 @@ const App = () => {
       return
     }
 
-    dispatch({
-      type: 'CREATE_ANECDOTE',
-      payload: value
-    })
-
+    dispatch(createAnecdote(value))
     e.target.text.value = ''
   }
 
