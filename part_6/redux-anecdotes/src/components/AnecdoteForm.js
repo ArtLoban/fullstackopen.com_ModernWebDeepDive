@@ -4,7 +4,7 @@ import {createAnecdote} from '../reducers/anecdoteReducer';
 const AnecdoteForm = () => {
   const dispatch = useDispatch()
 
-  const onFormSumbit = (e) => {
+  const onFormSubmit = (e) => {
     e.preventDefault()
 
     const value = e.target.text.value.trim()
@@ -20,12 +20,15 @@ const AnecdoteForm = () => {
   }
 
   return (
-    <form onSubmit={onFormSumbit}>
-      <div>
-        <input name="text" />
-      </div>
-      <button>create</button>
-    </form>
+    <div>
+      <h2>create new</h2>
+      <form onSubmit={onFormSubmit}>
+        <div>
+          <input name="text" />
+        </div>
+        <button>create</button>
+      </form>
+    </div>
   )
 }
 
