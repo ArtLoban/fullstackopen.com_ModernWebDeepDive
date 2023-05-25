@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { createAnecdote, voteAnecdote } from './reducers/anecdoteReducer'
+import { voteAnecdote } from './reducers/anecdoteReducer'
+
+import AnecdoteForm from './components/AnecdoteForm'
 
 const App = () => {
   const anecdotes = useSelector(state => state)
@@ -7,21 +9,6 @@ const App = () => {
 
   const vote = (id) => {
     dispatch(voteAnecdote(id))
-  }
-
-  const onFormSumbit = (e) => {
-    e.preventDefault()
-
-    const value = e.target.text.value.trim()
-
-    if (value.length === 0) {
-      alert('Cannot be empty!')
-      e.target.text.value = ''
-      return
-    }
-
-    dispatch(createAnecdote(value))
-    e.target.text.value = ''
   }
 
   return (
@@ -43,12 +30,7 @@ const App = () => {
           )
       }
       <h2>create new</h2>
-      <form onSubmit={onFormSumbit}>
-        <div>
-          <input name="text" />
-        </div>
-        <button>create</button>
-      </form>
+      <AnecdoteForm />
     </div>
   )
 }
