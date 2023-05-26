@@ -28,7 +28,7 @@ const anecdoteReducer = (state = initialState, action) => {
       const itemToVote = state.find(item => item.id === id)
       const changedItem = {
         ...itemToVote,
-        votes: ++itemToVote.votes
+        votes: itemToVote.votes + 1
       }
 
       return state.map(item => item.id !== id ? item : changedItem)
