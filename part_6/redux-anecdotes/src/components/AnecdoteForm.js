@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer';
 import { setNotification, removeNotification } from '../reducers/notificationReducer'
-import anecdoteService from '../services/anecdotes'
 
 const AnecdoteForm = () => {
   const dispatch = useDispatch()
@@ -9,30 +8,21 @@ const AnecdoteForm = () => {
   const onFormSubmit = (e) => {
     e.preventDefault()
 
-    const value = e.target.text.value.trim()
+    const content = e.target.text.value.trim()
 
-    if (value.length === 0) {
+    if (content.length === 0) {
       alert('Cannot be empty!')
       e.target.text.value = ''
       return
     }
 
-    anecdoteService.createNew(value)
-      .then(anecdote => {
-        dispatch(createAnecdote(anecdote))
-        dispatch(setNotification('New Anecdote was created!'))
-        e.target.text.value = ''
-        setTimeout(() => {
-          dispatch(removeNotification())
-        }, 5000)
-      })
-      .catch(e => {
-        console.log(e.message);
-        dispatch(setNotification('Something went wrong'))
-        setTimeout(() => {
-          dispatch(removeNotification())
-        }, 5000)
-      })
+    dispatch(createAnecdote(content))
+    e.target.text.value = ''
+
+    dispatch(setNotification('New Anecdote was created!'))
+    setTimeout(() => {
+      dispatch(removeNotification())
+    }, 5000)
   }
 
   return (
