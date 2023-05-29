@@ -8,7 +8,7 @@ const AnecdoteForm = () => {
     onSuccess: (newAnecdote) => {
       const anecdotes = queryClient.getQueryData('anecdotes')
       queryClient.setQueryData('anecdotes', anecdotes.concat(newAnecdote))
-    },
+    }
   })
 
   const dispatchNotification = useNotificationDispatch()
@@ -19,7 +19,17 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
 
-    newAnecdoteMutation.mutate({ content, votes: 0 })
+    newAnecdoteMutation.mutate({ content, votes: 0 }, {
+      onError: (error) => {
+        let message = error.response?.data?.error ?? 'Something went wrong'
+        console.log('error: ', message);
+
+        dispatchNotification({type: 'SET', payload: message})
+        setTimeout(() => {
+          dispatchNotification({type: 'CLEAR'})
+        }, 5000)
+      }
+    })
 
     dispatchNotification({type: 'SET', payload: 'New Anecdote created'})
     setTimeout(() => {
