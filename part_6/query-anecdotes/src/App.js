@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { getAnecdotess } from './requests'
+import { getAnecdotes } from './requests'
 
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
@@ -7,7 +7,7 @@ import Notification from './components/Notification'
 const App = () => {
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ['anecdotes'],
-    queryFn: getAnecdotess,
+    queryFn: getAnecdotes,
     refetchOnWindowFocus: false,
     retry: 2
   })
