@@ -1,54 +1,36 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-
-const useField = (type) => {
-  const [value, setValue] = useState('')
-
-  const onChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  return {
-    type,
-    value,
-    onChange
-  }
-}
-
-const useResource = (baseUrl) => {
-  const [resources, setResources] = useState([])
-
-  // ...
-
-  const create = (resource) => {
-    // ...
-  }
-
-  const service = {
-    create
-  }
-
-  return [
-    resources, service
-  ]
-}
+import { useField, useResource } from './hooks'
 
 const App = () => {
-  const content = useField('text')
-  const name = useField('text')
-  const number = useField('text')
+  const { reset: resetContent, ...content } = useField('text')
+  const { reset: resetName, ...name } = useField('text')
+  const { reset: resetNumber, ...number } = useField('text')
 
   const [notes, noteService] = useResource('http://localhost:3005/notes')
   const [persons, personService] = useResource('http://localhost:3005/persons')
 
   const handleNoteSubmit = (event) => {
     event.preventDefault()
+
+    if (content.value.trim().length === 0) {
+      alert("Field can not be empty!")
+      return
+    }
+
     noteService.create({ content: content.value })
+    resetContent()
   }
  
   const handlePersonSubmit = (event) => {
     event.preventDefault()
+
+    if (name.value.trim().length === 0 || number.value.trim().length === 0) {
+      alert("Field can not be empty!")
+      return
+    }
+
     personService.create({ name: name.value, number: number.value})
+    resetName()
+    resetNumber()
   }
 
   return (
