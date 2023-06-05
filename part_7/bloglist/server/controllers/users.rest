@@ -1,0 +1,19 @@
+### Fetches `User` resources
+GET http://localhost:3001/api/users
+
+### Send POST request with json body
+POST http://localhost:3001/api/users/
+Content-Type: application/json
+
+//{
+//  "username": "artdev",
+//  "name": "Art",
+//  "password": "artdev"
+//}
+{
+  "username": "testuser",
+  "name": "Test User",
+  "password": "testuser"
+}
+
+###

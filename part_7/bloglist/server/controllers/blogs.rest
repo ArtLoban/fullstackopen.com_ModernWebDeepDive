@@ -1,0 +1,43 @@
+### Fetches `Blog` resources
+GET http://localhost:3001/api/blogs
+
+### Send POST request with json body
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFydGRldiIsImlkIjoiNjQ1MGU1ZGMwMWFhYWFlMWMwNTE4NzFiIiwiaWF0IjoxNjgzMDMzMjU5LCJleHAiOjE2ODMwMzY4NTl9._-UVB4wVC5iQEZ7CtMqvl9iuQkp42UFTfup7ktdbJAo
+
+{
+  "title": "First class tests",
+  "author": "Robert C. Martin",
+  "url": "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
+  "likes": 10
+}
+//{
+//  "title": "React patterns",
+//  "author": "Michael Chan",
+//  "url": "https://reactpatterns.com/",
+//  "likes": 7,
+//  "userId": "6450e5dc01aaaae1c051871b"
+//}
+//{
+//  "title": "Go To Statement Considered Harmful",
+//  "author": "Edsger W. Dijkstra",
+//  "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+//  "likes": 5,
+//  "userId": "6450e5dc01aaaae1c051871b"
+//}
+
+### Removes the identified `Blogs` resource
+DELETE http://localhost:3001/api/blogs/645113512285e9fbab67d594
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFydGRldiIsImlkIjoiNjQ1MGU1ZGMwMWFhYWFlMWMwNTE4NzFiIiwiaWF0IjoxNjgzMDMzMjU5LCJleHAiOjE2ODMwMzY4NTl9._-UVB4wVC5iQEZ7CtMqvl9iuQkp42UFTfup7ktdbJAo
+
+### Send PUT request with json body
+PUT http://localhost:3001/api/blogs/644fb280bd76d5ce6b9df934
+Content-Type: application/json
+
+{
+  "likes": "21"
+}
+
+###
+
