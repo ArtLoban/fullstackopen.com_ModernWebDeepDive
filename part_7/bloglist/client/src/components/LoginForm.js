@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import loginService from '../services/login';
+import { setNotification } from '../reducers/notificationReducer'
 
-const LoginForm = ({ setUser, setMessage }) => {
+const LoginForm = ({ setUser }) => {
+  const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -22,11 +25,12 @@ const LoginForm = ({ setUser, setMessage }) => {
       console.log(`Caught error: ${e.message}`);
       console.log('e.response.data: ', e.response.data);
 
-      setMessage({
+      const notification = {
         body: e.response?.data?.error || 'Something went wrong',
         status: 'error',
         duration: 5000
-      })
+      }
+      dispatch(setNotification(notification))
     }
   }
 

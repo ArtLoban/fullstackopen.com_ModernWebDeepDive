@@ -1,28 +1,34 @@
-const Notification = ({ message, setMessage }) => {
-  if (message === null) {
+import { useDispatch, useSelector } from 'react-redux'
+import { clearNotification } from '../reducers/notificationReducer'
+
+const Notification = () => {
+  const dispatch = useDispatch()
+  const notification = useSelector(({ notification }) => notification)
+
+  if (notification === null) {
     return null
   }
 
   let className = 'msg'
 
-  switch (message.status) {
-  case 'error':
-    className += ' error'
-    break
-  case 'success':
-    className += ' success'
+  switch (notification.status) {
+    case 'error':
+      className += ' error'
+      break
+    case 'success':
+      className += ' success'
   }
 
   const renderMessage = () => {
-    const duration = message.duration || 2000
+    const duration = notification.duration || 2000
 
     setTimeout(() => {
-      setMessage(null)
+      dispatch(clearNotification())
     }, duration)
 
     return (
       <div className={className}>
-        {message.body}
+        {notification.body}
       </div>
     )
   }

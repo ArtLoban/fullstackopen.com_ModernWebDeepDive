@@ -9,7 +9,6 @@ import BlogList from './components/BlogList'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
 
   const blogFormRef = useRef()
 
@@ -32,7 +31,7 @@ const App = () => {
 
   const renderContent = () => {
     if (user === null) {
-      return <LoginForm setUser={setUser} setMessage={setMessage} />
+      return <LoginForm setUser={setUser} />
     }
 
     return (
@@ -43,7 +42,7 @@ const App = () => {
           <hr/>
         </div>
         <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-          <BlogForm blogs={blogs} updateBlogs={setBlogs} setMessage={setMessage} blogFormRef={blogFormRef} />
+          <BlogForm blogs={blogs} updateBlogs={setBlogs} blogFormRef={blogFormRef} />
         </Togglable>
         <hr/>
         <BlogList blogs={blogs} updateBlogs={setBlogs} user={user} />
@@ -54,7 +53,7 @@ const App = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      <Notification message={message} setMessage={setMessage} />
+      <Notification />
       { renderContent() }
     </div>
   )
