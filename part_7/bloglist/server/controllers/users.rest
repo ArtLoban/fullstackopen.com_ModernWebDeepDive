@@ -16,4 +16,10 @@ Content-Type: application/json
   "password": "testuser"
 }
 
+//{
+//  "username": "newtest",
+//  "name": "New Test",
+//  "password": "newtest"
+//}
+
 ###
