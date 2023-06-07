@@ -1,12 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
+
 import blogService from './services/blogs'
+import {initializeBlogs} from './reducers/blogReducer';
+
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogList from './components/BlogList'
 
+
 const App = () => {
+  const dispatch = useDispatch()
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
@@ -20,9 +26,11 @@ const App = () => {
       setUser(user)
       blogService.setToken(user.token)
     }
-
-    blogService.getAll().then(blogs => setBlogs(blogs))
   }, [])
+
+  useEffect(() => {
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
   const onLogoutClick = () => {
     setUser(null)
@@ -42,10 +50,10 @@ const App = () => {
           <hr/>
         </div>
         <Togglable buttonLabel="New Blog" ref={blogFormRef}>
-          <BlogForm blogs={blogs} updateBlogs={setBlogs} blogFormRef={blogFormRef} />
+          <BlogForm blogFormRef={blogFormRef} />
         </Togglable>
         <hr/>
-        <BlogList blogs={blogs} updateBlogs={setBlogs} user={user} />
+        <BlogList updateBlogs={setBlogs} user={user} />
       </>
     )
   }

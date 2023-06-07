@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import blogService from '../services/blogs'
 import { setNotification } from '../reducers/notificationReducer'
+import { createBlog } from '../reducers/blogReducer'
 
-const BlogForm = ({ blogs, updateBlogs, blogFormRef }) => {
+const BlogForm = ({ blogFormRef }) => {
   const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
@@ -13,9 +13,8 @@ const BlogForm = ({ blogs, updateBlogs, blogFormRef }) => {
     e.preventDefault()
 
     try {
-      const newBlog = await blogService.create({title, author, url})
+      dispatch(createBlog({title, author, url}))
 
-      updateBlogs([...blogs, newBlog])
       setTitle('')
       setAuthor('')
       setURL('')

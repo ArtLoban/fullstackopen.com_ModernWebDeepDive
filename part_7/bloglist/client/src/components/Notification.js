@@ -28,7 +28,7 @@ const Notification = () => {
 
     return (
       <div className={className}>
-        {notification.body}
+        {notification.body }
       </div>
     )
   }
