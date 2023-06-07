@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import blogService from './services/blogs'
 import {initializeBlogs} from './reducers/blogReducer';
+import { setUser } from './reducers/userReducer'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
@@ -10,8 +11,7 @@ import BlogList from './components/BlogList'
 
 const App = () => {
   const dispatch = useDispatch()
-  const [user, setUser] = useState(null)
-
+  const user = useSelector(({user}) => user)
   const blogFormRef = useRef()
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const App = () => {
 
     if (appUserJSON) {
       const user = JSON.parse(appUserJSON)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
     }
   }, [])
@@ -29,13 +29,13 @@ const App = () => {
   }, [dispatch])
 
   const onLogoutClick = () => {
-    setUser(null)
+    dispatch(setUser(null))
     window.localStorage.removeItem('appUser')
   }
 
   const renderContent = () => {
     if (user === null) {
-      return <LoginForm setUser={setUser} />
+      return <LoginForm />
     }
 
     return (
@@ -49,7 +49,7 @@ const App = () => {
           <BlogForm blogFormRef={blogFormRef} />
         </Togglable>
         <hr/>
-        <BlogList user={user} />
+        <BlogList />
       </>
     )
   }

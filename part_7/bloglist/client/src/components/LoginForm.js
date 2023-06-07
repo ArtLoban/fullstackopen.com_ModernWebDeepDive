@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import loginService from '../services/login';
 import { setNotification } from '../reducers/notificationReducer'
+import { setUser } from '../reducers/userReducer'
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = () => {
   const dispatch = useDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -17,7 +18,7 @@ const LoginForm = ({ setUser }) => {
       if (typeof user.token !== 'undefined') {
         window.localStorage.setItem('appUser', JSON.stringify(user))
 
-        setUser(user)
+        dispatch(setUser(user))
         setUsername('')
         setPassword('')
       }
