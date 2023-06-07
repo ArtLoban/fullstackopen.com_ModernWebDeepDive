@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import blogService from '../services/blogs'
+import { useDispatch } from 'react-redux'
+import { updateBlog, removeBlog } from '../reducers/blogReducer';
 
-const Blog = ({blog, blogs, updateBlogs, user }) => {
+const Blog = ({blog, user }) => {
+  const dispatch = useDispatch()
   const [visible, toggleVisible] = useState(false);
 
   const blogStyle = {
@@ -14,9 +16,8 @@ const Blog = ({blog, blogs, updateBlogs, user }) => {
 
   const handleLike = async () => {
     try {
-      const updatedBlog = await blogService.update({ ...blog, likes: blog.likes + 1 })
-      const updated = blogs.map(item => item.id === updatedBlog.id ? updatedBlog : item)
-      updateBlogs(updated)
+      const blogData = { ...blog, likes: blog.likes + 1 }
+      dispatch(updateBlog(blogData))
     } catch (e) {
       console.log(e.message); // TODO: Show error message
     }
@@ -25,8 +26,7 @@ const Blog = ({blog, blogs, updateBlogs, user }) => {
   const handleDelete = async () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
       try {
-        await blogService.remove(blog.id)
-        updateBlogs(blogs.filter(item => item.id !== blog.id))
+        dispatch(removeBlog(blog.id))
       } catch (e) {
         console.log(e.message); // TODO: Show error message
       }

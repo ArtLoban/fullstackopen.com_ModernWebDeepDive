@@ -17,8 +17,15 @@ const create = async blogData => {
     headers: { Authorization: token },
   }
 
-  const response = await axios.post(baseUrl, blogData, config)
-  return response.data
+  try {
+    const response = await axios.post(baseUrl, blogData, config)
+    return response.data
+  } catch (e) {
+    console.log(`Caught error: ${e.message}`);
+    console.log('e.response.data: ', e.response.data);
+
+    throw e;
+  }
 }
 
 const update = async blogData => {

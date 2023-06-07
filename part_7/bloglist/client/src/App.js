@@ -1,19 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-
 import blogService from './services/blogs'
 import {initializeBlogs} from './reducers/blogReducer';
-
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import BlogList from './components/BlogList'
 
-
 const App = () => {
   const dispatch = useDispatch()
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
   const blogFormRef = useRef()
@@ -53,7 +49,7 @@ const App = () => {
           <BlogForm blogFormRef={blogFormRef} />
         </Togglable>
         <hr/>
-        <BlogList updateBlogs={setBlogs} user={user} />
+        <BlogList user={user} />
       </>
     )
   }
