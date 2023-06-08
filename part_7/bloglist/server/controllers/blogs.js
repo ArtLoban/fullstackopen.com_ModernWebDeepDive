@@ -1,12 +1,12 @@
-
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const Comment = require('../models/сomment')
 
 // GET Blogs
 blogsRouter.get('/', async (request, response, next) => {
   try {
-    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
+    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 }).populate('comments', { content: 1 })
     response.json(blogs)
   } catch (e) {
     next(e)
@@ -97,6 +97,35 @@ blogsRouter.put('/:id', async (request, response, next) => {
     const populated = await updatedBlog.populate('user', { username: 1, name: 1 })
 
     response.json(populated)
+  } catch (e) {
+    next(e)
+  }
+})
+
+// CREATE Comment related to Blog
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+  const body = request.body
+
+  if (!body.content) {
+    return response.status(400).json({
+      error: 'Content field is required!'
+    })
+  }
+
+  const blog = await Blog.findById(request.params.id)
+
+  const comment = new Comment({
+    content: body.content,
+    createdAt: new Date(),
+  })
+
+  try {
+    const savedComment = await comment.save()
+    blog.comments = blog.comments.concat(savedComment._id)
+    await blog.save()
+
+    const populated = await savedComment.populate('blog', { title: 1, author: 1 })
+    response.status(201).json(populated)
   } catch (e) {
     next(e)
   }

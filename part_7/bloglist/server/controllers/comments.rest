@@ -1,0 +1,18 @@
+### Fetches `Comment` resources
+GET http://localhost:3001/api/comments
+
+### Send POST request with json body
+POST http://localhost:3001/api/comments
+Content-Type: application/json
+
+{
+  "content": "Comments should be anonymous",
+  "createdAt": "Thu Jun 08 2023 14:02:35 GMT+0300 (Eastern European Summer Time)",
+  "blogId": "6450f2d282036657772486d5"
+}
+###
+
+### Removes the identified `Comment` resource
+DELETE http://localhost:3001/api/comments/6481b917bb0fc4713ec69664
+
+###
