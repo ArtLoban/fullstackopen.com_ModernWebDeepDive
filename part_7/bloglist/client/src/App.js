@@ -17,6 +17,7 @@ import Togglable from './components/Togglable'
 import BlogList from './components/BlogList'
 import Header from './components/Header';
 import Users from './components/Users';
+import User from './components/User';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -56,6 +57,7 @@ const App = () => {
       <Notification />
       <Routes>
         <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<User />} />
         <Route path="/" element={user ? <Main /> : <LoginForm /> } />
       </Routes>
     </div>
