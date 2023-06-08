@@ -3,6 +3,21 @@ import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { createBlog } from '../reducers/blogReducer'
 
+import styled from 'styled-components'
+
+const Button = styled.button`
+  background: #87c0de;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #00a2f8;
+  border-radius: 3px;
+`
+
+const Input = styled.input`
+  margin: 0.25em;
+`
+
 const BlogForm = ({ blogFormRef }) => {
   const dispatch = useDispatch()
   const [title, setTitle] = useState('')
@@ -30,10 +45,10 @@ const BlogForm = ({ blogFormRef }) => {
     <div>
       <h2>Create new</h2>
       <form onSubmit={onFormSubmit}>
-        <div>title: <input value={title} onChange={e => setTitle(e.target.value)} /></div>
-        <div>author: <input value={author} onChange={e => setAuthor(e.target.value)} /></div>
-        <div>url: <input value={url} onChange={e => setURL(e.target.value)} /></div>
-        <button>Create</button>
+        <div>title: <Input value={title} onChange={e => setTitle(e.target.value)} /></div>
+        <div>author: <Input value={author} onChange={e => setAuthor(e.target.value)} /></div>
+        <div>url: <Input value={url} onChange={e => setURL(e.target.value)} /></div>
+        <Button>Create</Button>
       </form>
     </div>
   )

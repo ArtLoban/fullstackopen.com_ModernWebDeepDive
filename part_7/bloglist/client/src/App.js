@@ -17,6 +17,13 @@ import Users from './components/Users';
 import User from './components/User';
 import Blog from './components/Blog';
 
+import styled from 'styled-components'
+
+const Page = styled.div`
+  padding: 1em;
+  background: #fafafa;
+`
+
 const App = () => {
   const dispatch = useDispatch()
   const user = useSelector(({user}) => user)
@@ -49,7 +56,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Page>
       <Header />
       <h1>Blogs</h1>
       <Notification />
@@ -59,7 +66,7 @@ const App = () => {
         <Route path="/blogs/:id" element={<Blog />} />
         <Route path="/" element={user ? <Main /> : <LoginForm /> } />
       </Routes>
-    </div>
+    </Page>
   )
 }
 
