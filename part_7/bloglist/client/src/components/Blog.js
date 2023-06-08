@@ -1,21 +1,19 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateBlog, removeBlog } from '../reducers/blogReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate, Link } from 'react-router-dom'
+import { removeBlog, updateBlog } from '../reducers/blogReducer';
 
-const Blog = ({ blog }) => {
+const BlogSingle = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const params = useParams()
+  const blogId = params?.id
+
   const user = useSelector(({ user }) => user)
-  const [visible, toggleVisible] = useState(false);
+  const blog = useSelector(({ blogs }) => blogs.find(blog => blog.id === blogId))
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+  if (!blog) return null
 
-  const handleLike = async () => {
+  const handleLike = () => {
     try {
       const blogData = { ...blog, likes: blog.likes + 1 }
       dispatch(updateBlog(blogData))
@@ -24,10 +22,11 @@ const Blog = ({ blog }) => {
     }
   }
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
       try {
         dispatch(removeBlog(blog.id))
+        navigate('/')
       } catch (e) {
         console.log(e.message); // TODO: Show error message
       }
@@ -35,33 +34,27 @@ const Blog = ({ blog }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div>
+      <h2>{ blog.title }</h2>
+
+      <a href={blog.url}>{ blog.url }</a>
       <div>
-        <span>{blog.title} by {blog.author}</span>
-        <button
-          onClick={() => toggleVisible(!visible)}
-          style={{marginLeft: '10px'}}
-          type="button"
-        >{visible ? 'Hide' : 'View'}</button>
+        <span>likes {blog.likes}</span>
+        <button type="button" onClick={handleLike} style={{marginLeft: '10px'}}>Like</button>
       </div>
-      {visible &&
+      <span>Added by {blog.user.name}</span>
+      {
+        blog.user?.username === user?.username &&
         <div>
-          <span>{blog.url}</span>
-          <div>
-            <span>likes {blog.likes}</span>
-            <button type="button" onClick={handleLike} style={{marginLeft: '10px'}}>Like</button>
-          </div>
-          <span>{blog.user?.name}</span>
-          {
-            blog.user?.username === user?.username &&
-            <div>
-              <button type="button" onClick={handleDelete}>Remove</button>
-            </div>
-          }
+          <button type="button" onClick={handleDelete}>Remove</button>
         </div>
       }
+
+      <p>
+        <Link to="/">back</Link>
+      </p>
     </div>
   )
 }
 
-export default Blog
+export default BlogSingle

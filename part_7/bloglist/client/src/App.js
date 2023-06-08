@@ -3,9 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   Routes,
   Route,
-  Link,
-  Navigate,
-  useMatch
 } from "react-router-dom"
 import blogService from './services/blogs'
 import {initializeBlogs} from './reducers/blogReducer';
@@ -18,6 +15,7 @@ import BlogList from './components/BlogList'
 import Header from './components/Header';
 import Users from './components/Users';
 import User from './components/User';
+import Blog from './components/Blog';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -58,6 +56,7 @@ const App = () => {
       <Routes>
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<User />} />
+        <Route path="/blogs/:id" element={<Blog />} />
         <Route path="/" element={user ? <Main /> : <LoginForm /> } />
       </Routes>
     </div>
