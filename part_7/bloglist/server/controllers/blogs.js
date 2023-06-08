@@ -6,7 +6,7 @@ const Comment = require('../models/сomment')
 // GET Blogs
 blogsRouter.get('/', async (request, response, next) => {
   try {
-    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 }).populate('comments', { content: 1 })
+    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 }).populate('comments', { content: 1, createdAt: 1 })
     response.json(blogs)
   } catch (e) {
     next(e)
@@ -125,7 +125,11 @@ blogsRouter.post('/:id/comments', async (request, response, next) => {
     await blog.save()
 
     const populated = await savedComment.populate('blog', { title: 1, author: 1 })
-    response.status(201).json(populated)
+    const result = {
+      blogId: request.params.id,
+      comment: populated
+    }
+    response.status(201).json(result)
   } catch (e) {
     next(e)
   }

@@ -45,7 +45,7 @@ POST http://localhost:3001/api/blogs/6450f31c82036657772486e0/comments
 Content-Type: application/json
 
 {
-  "content": "Comments should be anonymous 2",
+  "content": "Comments should be",
   "createdAt": "Thu Jun 08 2023 14:02:35 GMT+0300 (Eastern European Summer Time)"
 }
 
