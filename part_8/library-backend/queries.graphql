@@ -40,6 +40,19 @@ query allBooksByAuthorOrGenre {
   }
 }
 
+mutation createBook {
+  addBook(
+    title: "NoSQL Distilled",
+    author: "Martin Fowler",
+    published: 2012,
+    genres: ["database", "nosql"]
+  ) {
+    title,
+    author,
+    published,
+    genres
+  }
+}
 
 
 
