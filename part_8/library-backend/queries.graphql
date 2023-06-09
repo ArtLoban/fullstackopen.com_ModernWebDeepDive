@@ -19,3 +19,9 @@ query getAllAuthors {
     bookCount
   }
 }
+
+query allBooksByAuthor {
+  allBooksByAuthor(author: "Robert Martin") {
+    title
+  }
+}
