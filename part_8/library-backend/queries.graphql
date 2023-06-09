@@ -3,3 +3,11 @@ query getCounts {
   authorCount
 }
 
+query getAllBooks {
+  allBooks {
+    title
+    author
+    published
+    genres
+  }
+}
