@@ -25,3 +25,15 @@ query allBooksByAuthor {
     title
   }
 }
+
+query allBooksByGenre {
+  allBooksByGenre(genre: "refactoring") {
+    title
+    author
+  }
+}
+
+
+
+
+
