@@ -105,6 +105,7 @@ const typeDefs = `
     allAuthors: [Author!]!
     allBooksByAuthor(author: String!): [Book!]!
     allBooksByGenre(genre: String!): [Book!]!
+    allBooksByAuthorOrGenre(genre: String, author: String): [Book!]!
   }
 `
 
@@ -116,6 +117,27 @@ const resolvers = {
     allAuthors: () => authors,
     allBooksByAuthor: (root, args) => books.filter(book => book.author === args.author),
     allBooksByGenre: (root, args) => books.filter(book => book.genres.includes(args.genre)),
+    allBooksByAuthorOrGenre: (root, args) => books.filter(book => {
+      // If no options
+      if (!args.genre && !args.author) {
+        return books
+      }
+
+      // If `genre` is set
+      if (args.genre && !args.author) {
+        return book.genres.includes(args.genre)
+      }
+
+      // If `author` is set
+      if (args.author && !args.genre) {
+        return book.author === args.author
+      }
+
+      // If `genre` and author` are set
+      if (args.genre && args.author) {
+        return (book.genres.includes(args.genre) && book.author === args.author)
+      }
+    }),
   },
   Author: {
     bookCount: (root) => books.filter(book => book.author === root.name).length

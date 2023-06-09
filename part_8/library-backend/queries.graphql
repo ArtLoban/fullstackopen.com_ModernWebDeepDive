@@ -33,6 +33,12 @@ query allBooksByGenre {
   }
 }
 
+query allBooksByAuthorOrGenre {
+  allBooksByAuthorOrGenre(author: "Robert Martin", genre: "design") {
+    title
+    author
+  }
+}
 
 
 
