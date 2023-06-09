@@ -5,6 +5,7 @@ query getCounts {
 
 query getAllBooks {
   allBooks {
+    id
     title
     author
     published
@@ -14,6 +15,7 @@ query getAllBooks {
 
 query getAllAuthors {
   allAuthors {
+    id
     name
     born
     bookCount
@@ -54,5 +56,24 @@ mutation createBook {
   }
 }
 
+mutation createBook2 {
+  addBook(
+    title: "Pimeyden tango",
+    author: "Reijo Mäki",
+    published: 1997,
+    genres: ["crime"]
+  ) {
+    id
+    title
+    author
+  }
+}
+
+mutation editAuthor {
+  editAuthor(name: "Reijo Mäki", setBornTo: 1958) {
+    name
+    born
+  }
+}
 
 
