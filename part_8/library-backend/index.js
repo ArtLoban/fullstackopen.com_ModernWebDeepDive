@@ -1,6 +1,27 @@
 const { ApolloServer } = require('@apollo/server')
 const { startStandaloneServer } = require('@apollo/server/standalone')
+const { GraphQLError } = require('graphql')
 const { v1: uuid } = require('uuid')
+
+const mongoose = require('mongoose')
+mongoose.set('strictQuery', false)
+const Author = require('./models/author')
+const Book = require('./models/book')
+
+require('dotenv').config()
+
+const MONGODB_URI = process.env.MONGODB_URI
+
+console.log('connecting to', MONGODB_URI)
+
+mongoose.connect(MONGODB_URI)
+.then(() => {
+  console.log('connected to MongoDB')
+})
+.catch((error) => {
+  console.log('error connection to MongoDB:', error.message)
+})
+
 
 let authors = [
   {
@@ -89,9 +110,9 @@ const typeDefs = `
  type Book {
     id: ID!
     title: String!
-    author: String!
+    author: Author!
     published: Int!
-    genres: [String]!
+    genres: [String!]!
   }
   
   type Author {
@@ -160,19 +181,41 @@ const resolvers = {
     }),
   },
   Mutation: {
-    addBook: (root, args) => {
-      // Check if author exists. Create new if not
-      const author = authors.find(author => author.name === args.author)
+    addBook: async (root, args) => {
+      let author = await Author.findOne({ name: args.author })
 
       if (!author) {
-        const newAuthor = { name: args.author, id: uuid(), born: null }
-        authors = authors.concat(newAuthor)
+        author = new Author({ name: args.author, born: null })
+
+        try {
+          await author.save()
+        } catch (error) {
+          throw new GraphQLError('Creating the author failed', {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+              invalidArgs: args.author,
+              error
+            }
+          })
+        }
       }
 
       // Create new book
-      const book = { ...args, id: uuid() }
-      books = books.concat(book)
-      return book
+      const newBook = new Book({ ...args, author: author })
+
+      try {
+        await newBook.save()
+      } catch (error) {
+        throw new GraphQLError('Creating the new Book failed', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.title,
+            error
+          }
+        })
+      }
+
+      return newBook
     },
     editAuthor: (root, args) => {
       const author = authors.find(author => author.name === args.name)

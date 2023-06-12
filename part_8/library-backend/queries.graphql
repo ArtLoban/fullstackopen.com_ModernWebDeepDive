@@ -49,10 +49,14 @@ mutation createBook {
     published: 2012,
     genres: ["database", "nosql"]
   ) {
-    title,
-    author,
-    published,
+    title
+    published
     genres
+    author {
+      id
+      name
+      born
+    }
   }
 }
 
