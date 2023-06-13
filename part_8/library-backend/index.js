@@ -240,7 +240,12 @@ const resolvers = {
       const author = await Author.findOne({ name: args.name });
 
       if (!author) {
-        return null
+        throw new GraphQLError('Author not found', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name
+          }
+        })
       }
 
       author.born = args.setBornTo
