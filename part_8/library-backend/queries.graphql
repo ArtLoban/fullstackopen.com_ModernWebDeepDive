@@ -50,7 +50,7 @@ query allBooksByGenre {
 }
 
 query allBooksByAuthorOrGenre {
-  allBooksByAuthorOrGenre(author: "Joshua Kerievsky", genre: "patterns") {
+  allBooksByAuthorOrGenre(author: "Robert Martin", genre: "design") {
     title
     genres
     author {
@@ -61,8 +61,8 @@ query allBooksByAuthorOrGenre {
 
 mutation createBook {
   addBook(
-    title: "Clean Code",
-    author: "Robert Martin",
+    title: "Art New",
+    author: "Art Martin",
     published: 2008,
     genres: ["refactoring"]
   ) {
@@ -133,7 +133,7 @@ mutation createBook4 {
 
 
 mutation editAuthor {
-  editAuthor(name: "Reijo Mäki", setBornTo: 1958) {
+  editAuthor(name: "Art Martin", setBornTo: 1986) {
     name
     born
   }
