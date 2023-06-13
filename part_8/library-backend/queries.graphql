@@ -7,7 +7,10 @@ query getAllBooks {
   allBooks {
     id
     title
-    author
+    author {
+      name
+      born
+    }
     published
     genres
   }
@@ -25,29 +28,43 @@ query getAllAuthors {
 query allBooksByAuthor {
   allBooksByAuthor(author: "Robert Martin") {
     title
+    published
+    genres
+    author {
+      id
+      name
+      born
+    }
   }
 }
 
 query allBooksByGenre {
   allBooksByGenre(genre: "refactoring") {
     title
-    author
+    published
+    genres
+    author {
+      name
+    }
   }
 }
 
 query allBooksByAuthorOrGenre {
-  allBooksByAuthorOrGenre(author: "Robert Martin", genre: "design") {
+  allBooksByAuthorOrGenre(author: "Joshua Kerievsky", genre: "patterns") {
     title
-    author
+    genres
+    author {
+      name
+    }
   }
 }
 
 mutation createBook {
   addBook(
-    title: "NoSQL Distilled",
-    author: "Martin Fowler",
-    published: 2012,
-    genres: ["database", "nosql"]
+    title: "Clean Code",
+    author: "Robert Martin",
+    published: 2008,
+    genres: ["refactoring"]
   ) {
     title
     published
@@ -62,16 +79,58 @@ mutation createBook {
 
 mutation createBook2 {
   addBook(
-    title: "Pimeyden tango",
-    author: "Reijo Mäki",
-    published: 1997,
-    genres: ["crime"]
+    title: "Agile software development",
+    author: "Robert Martin",
+    published: 2002,
+    genres: ["agile", "patterns", "design"]
   ) {
-    id
     title
-    author
+    published
+    genres
+    author {
+      id
+      name
+      born
+    }
   }
 }
+
+mutation createBook3 {
+  addBook(
+    title: "Refactoring, edition 2",
+    author: "Martin Fowler",
+    published: 2018,
+    genres: ["refactoring"]
+  ) {
+    title
+    published
+    genres
+    author {
+      id
+      name
+      born
+    }
+  }
+}
+
+mutation createBook4 {
+  addBook(
+    title: "Refactoring to patterns",
+    author: "Joshua Kerievsky",
+    published: 2008,
+    genres: ["refactoring", "patterns"]
+  ) {
+    title
+    published
+    genres
+    author {
+      id
+      name
+      born
+    }
+  }
+}
+
 
 mutation editAuthor {
   editAuthor(name: "Reijo Mäki", setBornTo: 1958) {

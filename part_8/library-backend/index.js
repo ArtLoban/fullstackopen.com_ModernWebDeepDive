@@ -149,36 +149,55 @@ const typeDefs = `
 
 const resolvers = {
   Author: {
-    bookCount: (root) => books.filter(book => book.author === root.name).length
+    bookCount: async (root) => Book.find({ author: root._id }).countDocuments()
   },
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
-    allBooks: () => books,
-    allAuthors: () => authors,
-    allBooksByAuthor: (root, args) => books.filter(book => book.author === args.author),
-    allBooksByGenre: (root, args) => books.filter(book => book.genres.includes(args.genre)),
-    allBooksByAuthorOrGenre: (root, args) => books.filter(book => {
-      // If no options
-      if (!args.genre && !args.author) {
-        return books
+    bookCount: async () => Book.collection.countDocuments(),
+    authorCount: async () => Author.collection.countDocuments(),
+    allBooks: async () => Book.find({}).populate('author'),
+    allAuthors: async () => Author.find({}),
+    allBooksByAuthor: async (root, args) => {
+      const author = await Author.findOne({ name: args.author });
+
+      if (!author) {
+        throw new GraphQLError('Author not found', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.author
+          }
+        })
       }
 
-      // If `genre` is set
-      if (args.genre && !args.author) {
-        return book.genres.includes(args.genre)
-      }
+      return Book.find({ author: author._id }).populate('author');
+    },
+    allBooksByGenre: async (root, args) => {
+      return Book.find({ genres: args.genre }).populate('author')
+    },
+    allBooksByAuthorOrGenre: async (root, args) => {
+      return Book.find({}).populate('author').then(books => {
+        // If no options
+        if (!args.genre && !args.author) {
+          return books
+        }
 
-      // If `author` is set
-      if (args.author && !args.genre) {
-        return book.author === args.author
-      }
+        // If `genre` is set
+        if (args.genre && !args.author) {
+          return books.filter(book => book.genres.includes(args.genre))
+        }
 
-      // If `genre` and author` are set
-      if (args.genre && args.author) {
-        return (book.genres.includes(args.genre) && book.author === args.author)
-      }
-    }),
+        // If `author` is set
+        if (args.author && !args.genre) {
+          return books.filter(book => book.author.name === args.author)
+        }
+
+        // If `genre` and author` are set
+        if (args.genre && args.author) {
+          return books.filter(book => book.genres.includes(args.genre) && book.author.name === args.author)
+        }
+
+        return []
+      });
+    },
   },
   Mutation: {
     addBook: async (root, args) => {
@@ -217,15 +236,28 @@ const resolvers = {
 
       return newBook
     },
-    editAuthor: (root, args) => {
-      const author = authors.find(author => author.name === args.name)
+    editAuthor: async (root, args) => {
+      const author = await Author.findOne({ name: args.name });
+
       if (!author) {
         return null
       }
 
-      const updatedAuthor = { ...author, born: args.setBornTo }
-      authors = authors.map(author => author.name === args.name ? updatedAuthor : author)
-      return updatedAuthor
+      author.born = args.setBornTo
+
+      try {
+        await author.save()
+      } catch (error) {
+        throw new GraphQLError('Editing author failed', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.name,
+            error
+          }
+        })
+      }
+
+      return author
     }
   }
 }
