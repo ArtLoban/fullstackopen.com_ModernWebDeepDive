@@ -133,10 +133,46 @@ mutation createBook4 {
 
 
 mutation editAuthor {
-  editAuthor(name: "Art Martin", setBornTo: 1986) {
+  editAuthor(name: "Art Martin", setBornTo: 1989) {
     name
     born
   }
 }
+
+mutation newUser {
+  createUser (username: "artdev", favoriteGenre: "patterns") {
+    id
+    username
+    favoriteGenre
+  }
+}
+
+query getAllUsers {
+  allUsers {
+    id
+    username
+    favoriteGenre
+  }
+}
+
+mutation loginUser {
+  login (
+    username: "artdev"
+    password: "secret"
+  ) {
+    value
+  }
+}
+
+query {
+  me {
+    id
+    username
+  }
+}
+
+
+
+
 
 
